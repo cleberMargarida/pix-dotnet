@@ -1,4 +1,6 @@
-﻿public interface IPixClient : IPayload
+﻿using System;
+
+public interface IPixClient : IPayload, IDisposable
 {
     /// <summary>
     /// Gets the CobPayload interface.
