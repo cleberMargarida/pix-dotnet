@@ -7,27 +7,15 @@ namespace PixDotNet.Impl
 {
     internal class WebhookImpl : IWebhook
     {
-        private HttpClient httpClient;
+        private readonly HttpClient _httpClient;
 
         public WebhookImpl(HttpClient httpClient)
         {
-            this.httpClient = httpClient;
-        }
-
-        /// <inheritdoc/>
-        public void CancelWebhook(string chave)
-        {
-            throw new System.NotImplementedException();
+            _httpClient = httpClient;
         }
 
         /// <inheritdoc/>
         public Task CancelWebhookAsync(string chave, CancellationToken cancellationToken = default)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public void ConfigureWebhook(WebhookPayload body)
         {
             throw new System.NotImplementedException();
         }
@@ -39,19 +27,7 @@ namespace PixDotNet.Impl
         }
 
         /// <inheritdoc/>
-        public Webhook GetWebhook(string chave)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public Task<Webhook> GetWebhookAsync(string chave, CancellationToken cancellationToken = default)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public WebhooksConsultados ListWebhooks(ParametrosConsultaWebhooks @params)
         {
             throw new System.NotImplementedException();
         }

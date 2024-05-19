@@ -38,31 +38,5 @@ public interface IWebhook
     /// <param name="cancellationToken">O token de cancelamento da operação.</param>
     /// <returns>Uma tarefa que representa a operação assíncrona. O resultado são os webhooks consultados.</returns>
     Task<WebhooksConsultados> ListWebhooksAsync(ParametrosConsultaWebhooks @params, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Configura um webhook de forma síncrona.
-    /// </summary>
-    /// <param name="body">O corpo da configuração do webhook.</param>
-    void ConfigureWebhook(WebhookPayload body);
-
-    /// <summary>
-    /// Obtém um webhook de forma síncrona.
-    /// </summary>
-    /// <param name="chave">A chave do webhook.</param>
-    /// <returns>O webhook obtido.</returns>
-    Webhook GetWebhook(string chave);
-
-    /// <summary>
-    /// Cancela um webhook de forma síncrona.
-    /// </summary>
-    /// <param name="chave">A chave do webhook.</param>
-    void CancelWebhook(string chave);
-
-    /// <summary>
-    /// Lista webhooks de forma síncrona.
-    /// </summary>
-    /// <param name="params">Os parâmetros da consulta.</param>
-    /// <returns>Os webhooks consultados.</returns>
-    WebhooksConsultados ListWebhooks(ParametrosConsultaWebhooks @params);
 }
 

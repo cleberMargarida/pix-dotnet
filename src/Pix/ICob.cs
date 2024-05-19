@@ -50,29 +50,4 @@ public interface ICob
     /// <param name="cancellationToken">O token de cancelamento opcional.</param>
     /// <returns>Uma tarefa que representa a operação assíncrona. O resultado são as cobranças consultadas.</returns>
     Task<CobsConsultadas> ListCobAsync(ParametrosConsultaCob payload, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Cria uma nova cobrança com o ID de transação e corpo especificados de forma síncrona.
-    /// </summary>
-    CobGerada CreateCob(string txid, CobBody body);
-
-    /// <summary>
-    /// Revisa uma cobrança existente com o ID de transação e corpo especificados de forma síncrona.
-    /// </summary>
-    CobRevisada ReviewCob(string txid, CobBody body);
-
-    /// <summary>
-    /// Obtém uma cobrança com o ID de transação especificado de forma síncrona.
-    /// </summary>
-    CobSolicitada GetCob(string txid, int? revisao = null);
-
-    /// <summary>
-    /// Cria uma nova cobrança com o corpo especificado de forma síncrona.
-    /// </summary>
-    CobGerada CreateCob(CobBody body);
-
-    /// <summary>
-    /// Lista cobranças com base nos parâmetros de consulta especificados de forma síncrona.
-    /// </summary>
-    CobsConsultadas ListCob(ParametrosConsultaCob payload);
 }

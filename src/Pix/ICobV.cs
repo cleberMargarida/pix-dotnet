@@ -41,25 +41,5 @@ public interface ICobV : IVPayload
     /// <param name="cancellationToken">O token de cancelamento opcional.</param>
     /// <returns>Uma tarefa que representa a operação assíncrona. O resultado são as cobranças com vencimento consultadas.</returns>
     Task<CobsVConsultadas> ListCobVAsync(ParametrosConsultaCob @params, CancellationToken cancellationToken = default);
-
-    /// <summary>
-    /// Cria uma nova cobrança com vencimento com o ID de transação e corpo especificados de forma síncrona.
-    /// </summary>
-    CobVGerada CreateCobV(string txid, CobVBody body);
-
-    /// <summary>
-    /// Revisa uma cobrança com vencimento existente com o ID de transação e corpo especificados de forma síncrona.
-    /// </summary>
-    CobVRevisada ReviewCobV(string txid, CobVBody body);
-
-    /// <summary>
-    /// Obtém uma cobrança com vencimento com o ID de transação especificado de forma síncrona.
-    /// </summary>
-    CobVGerada GetCobV(string txid);
-
-    /// <summary>
-    /// Lista cobranças com vencimento com base nos parâmetros de consulta especificados de forma síncrona.
-    /// </summary>
-    CobsVConsultadas ListCobV(ParametrosConsultaCob @params);
 }
 

@@ -9,7 +9,7 @@ namespace PixDotNet.Impl
 {
     internal class PixClientImpl : IPixClient
     {
-        private bool disposedValue;
+        private bool _disposedValue;
         internal readonly bool _skipClientDispose;
         internal readonly HttpClient _httpClient;
         internal readonly HttpClientHandler _httpHandler;
@@ -17,48 +17,52 @@ namespace PixDotNet.Impl
         public PixClientImpl()
         {
             _httpHandler = new HttpClientHandler();
-            _httpClient = new HttpClient(_httpHandler);
-            _httpClient.Timeout = TimeSpan.FromMinutes(1);
+            _httpClient = new HttpClient(_httpHandler)
+            {
+                Timeout = TimeSpan.FromMinutes(1)
+            };
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             _httpClient.DefaultRequestHeaders.Add("Keep-Alive", "true");
+
+            CobPayload = new CobPayloadImpl(_httpClient);
+            Cob = new CobImpl(_httpClient);
+            CobV = new CobVImpl(_httpClient);
+            LoteCobV = new LoteCobVImpl(_httpClient);
+            PayloadLocation = new PayloadLocationImpl(_httpClient);
+            Pix = new PixImpl(_httpClient);
+            Webhook = new WebhookImpl(_httpClient);
         }
 
         /// <inheritdoc/>
-        public ICobPayload CobPayload => new CobPayloadImpl(_httpClient);
+        public ICobPayload CobPayload { get; }
 
         /// <inheritdoc/>
-        public ICob Cob => new CobImpl(_httpClient);
+        public ICob Cob { get; }
 
         /// <inheritdoc/>
-        public ICobV CobV => new CobVImpl(_httpClient);
+        public ICobV CobV { get; }
 
         /// <inheritdoc/>
-        public ILoteCobV LoteCobV => new LoteCobVImpl(_httpClient);
+        public ILoteCobV LoteCobV { get; }
 
         /// <inheritdoc/>
-        public IPayloadLocation PayloadLocation => new PayloadLocationImpl(_httpClient);
+        public IPayloadLocation PayloadLocation { get; }
 
         /// <inheritdoc/>
-        public IPix Pix => new PixImpl(_httpClient);
+        public IPix Pix { get; }
 
         /// <inheritdoc/>
-        public IWebhook Webhook => new WebhookImpl(_httpClient);
+        public IWebhook Webhook { get; }
 
         /// <inheritdoc/>
-        public CobPayload GetCobPayload(string pixUrlAccessToken)
+        public Task<CobPayload> GetCobPayloadAsync(string pixUrlAccessToken, CancellationToken cancellationToken = default)
         {
-            return CobPayload.GetCobPayload(pixUrlAccessToken);
-        }
-
-        /// <inheritdoc/>
-        public async Task<CobPayload> GetCobPayloadAsync(string pixUrlAccessToken, CancellationToken cancellationToken = default)
-        {
-            return await CobPayload.GetCobPayloadAsync(pixUrlAccessToken, cancellationToken);
+            return CobPayload.GetCobPayloadAsync(pixUrlAccessToken, cancellationToken);
         }
 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposedValue)
+            if (_disposedValue)
             {
                 return;
             }
@@ -68,7 +72,7 @@ namespace PixDotNet.Impl
                 _httpHandler?.Dispose();
             }
 
-            disposedValue = true;
+            _disposedValue = true;
         }
 
         ~PixClientImpl()
