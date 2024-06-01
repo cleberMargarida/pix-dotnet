@@ -25,21 +25,6 @@ namespace PixDotNet.Requests
                 Content = SerializeBody()
             }, cancellationToken);
         }
-
-        private HttpContent? SerializeBody()
-        {
-            if (Body is null)
-            {
-                return null;
-            }
-
-            if (Body is byte[] bodyBytes)
-            {
-                return new ByteArrayContent(bodyBytes);
-            }
-
-            return new ByteArrayContent(Serialize(Body));
-        }
     }
 
     internal class PutRequestOuter<TOut> : RequestBase
@@ -63,21 +48,6 @@ namespace PixDotNet.Requests
                 Content = SerializeBody()
             }, cancellationToken);
         }
-
-        private HttpContent? SerializeBody()
-        {
-            if (Body is null)
-            {
-                return null;
-            }
-
-            if (Body is byte[] bodyBytes)
-            {
-                return new ByteArrayContent(bodyBytes);
-            }
-
-            return new ByteArrayContent(Serialize(Body));
-        }
     }
 
     internal class PutRequest<TIn, TOut> : RequestBase
@@ -100,21 +70,6 @@ namespace PixDotNet.Requests
             {
                 Content = SerializeBody()
             }, cancellationToken);
-        }
-
-        private HttpContent? SerializeBody()
-        {
-            if (Body is null)
-            {
-                return null;
-            }
-
-            if (Body is byte[] bodyBytes)
-            {
-                return new ByteArrayContent(bodyBytes);
-            }
-
-            return new ByteArrayContent(Serialize(Body));
         }
     }
 }

@@ -7,9 +7,7 @@ namespace PixDotNet.Impl
 {
     internal class WebhookImpl : PixBase, IWebhook
     {
-        public WebhookImpl(HttpClient httpClient) : base(httpClient)
-        {
-        }
+        public WebhookImpl(HttpClient httpClient) : base(httpClient) { }
 
         public Task CancelWebhookAsync(string chave, CancellationToken cancellationToken = default)
         {

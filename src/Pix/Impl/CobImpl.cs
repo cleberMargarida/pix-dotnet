@@ -9,9 +9,7 @@ namespace PixDotNet.Impl
 {
     internal class CobImpl : PixBase, ICob
     {
-        public CobImpl(HttpClient httpClient) : base(httpClient)
-        {
-        }
+        public CobImpl(HttpClient httpClient) : base(httpClient) { }
 
         /// <inheritdoc/>
         public Task<CobGerada> CreateCobAsync(string txid, CobBody body, CancellationToken cancellationToken = default)

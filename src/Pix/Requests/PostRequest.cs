@@ -25,21 +25,5 @@ namespace PixDotNet.Requests
                 Content = SerializeBody()
             }, cancellationToken);
         }
-
-        private HttpContent? SerializeBody()
-        {
-            if (Body is null)
-            {
-                return null;
-            }
-
-            if (Body is byte[] bodyBytes)
-            {
-                return new ByteArrayContent(bodyBytes);
-            }
-
-            return new ByteArrayContent(Serialize(Body));
-        }
     }
-
 }

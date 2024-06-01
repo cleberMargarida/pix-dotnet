@@ -7,9 +7,7 @@ namespace PixDotNet.Impl
 {
     internal class PixImpl : PixBase, IPix
     {
-        public PixImpl(HttpClient httpClient) : base(httpClient)
-        {
-        }
+        public PixImpl(HttpClient httpClient) : base(httpClient) { }
 
         /// <inheritdoc/>
         public Task<Pix> GetPixAsync(string e2eid, CancellationToken cancellationToken = default)

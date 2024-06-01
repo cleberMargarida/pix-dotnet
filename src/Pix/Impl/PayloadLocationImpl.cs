@@ -7,9 +7,7 @@ namespace PixDotNet.Impl
 {
     internal class PayloadLocationImpl : PixBase, IPayloadLocation
     {
-        public PayloadLocationImpl(HttpClient httpClient) : base(httpClient)
-        {
-        }
+        public PayloadLocationImpl(HttpClient httpClient) : base(httpClient) { }
 
         /// <inheritdoc/>
         public Task<PayloadLocation> CreatePayloadLocationAsync(TipoCob tipoCob, CancellationToken cancellationToken = default)

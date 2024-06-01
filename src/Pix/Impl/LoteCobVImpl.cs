@@ -7,9 +7,7 @@ namespace PixDotNet.Impl
 {
     internal class LoteCobVImpl : PixBase, ILoteCobV
     {
-        public LoteCobVImpl(HttpClient httpClient) : base(httpClient)
-        {
-        }
+        public LoteCobVImpl(HttpClient httpClient) : base(httpClient) { }
 
         /// <inheritdoc/>
         public Task CriarOuAlterarCobVAsync(long id, LoteCobVBody body, CancellationToken cancellationToken = default)

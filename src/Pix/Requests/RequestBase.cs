@@ -27,21 +27,6 @@ namespace PixDotNet.Requests
         internal string Endpoint { get; }
         internal object? Body { get; }
 
-        protected TOut Deserialize<TOut>(Stream stream)
-        {
-            using (var reader = new StreamReader(stream))
-            using (var jsonReader = new JsonTextReader(reader))
-            {
-                return _serializer.Deserialize<TOut>(jsonReader)!;
-            }
-        }
-
-        protected static byte[] Serialize(object value)
-        {
-            var json = JsonConvert.SerializeObject(value);
-            return Encoding.UTF8.GetBytes(json);
-        }
-
         protected async Task<TOut> HandleResponseAsync<TOut>(HttpResponseMessage response)
         {
             using var responseStream = await response.Content.ReadAsStreamAsync();
@@ -71,15 +56,43 @@ namespace PixDotNet.Requests
                 throw new PixRequestException(string.Format("Unexpected response, status code {0}", response.StatusCode), response.StatusCode);
             }
 
-            if (response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
             {
-                return;
+                using (var sr = new StreamReader(responseStream))
+                {
+                    throw new PixRequestException(string.Format("Unexpected response, status code {0}: {1}", response.StatusCode, await sr.ReadToEndAsync()), response.StatusCode);
+                }
+            }
+        }
+
+        protected TOut Deserialize<TOut>(Stream stream)
+        {
+            using (var reader = new StreamReader(stream))
+            using (var jsonReader = new JsonTextReader(reader))
+            {
+                return _serializer.Deserialize<TOut>(jsonReader)!;
+            }
+        }
+
+        protected static byte[] Serialize(object value)
+        {
+            var json = JsonConvert.SerializeObject(value);
+            return Encoding.UTF8.GetBytes(json);
+        }
+
+        protected HttpContent? SerializeBody()
+        {
+            if (Body is null)
+            {
+                return null;
             }
 
-            using (var sr = new StreamReader(responseStream))
+            if (Body is byte[] bodyBytes)
             {
-                throw new PixRequestException(string.Format("Unexpected response, status code {0}: {1}", response.StatusCode, await sr.ReadToEndAsync()), response.StatusCode);
+                return new ByteArrayContent(bodyBytes);
             }
+
+            return new ByteArrayContent(Serialize(Body));
         }
     }
 }
