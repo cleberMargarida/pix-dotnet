@@ -10,10 +10,10 @@ public interface IWebhook
     /// <summary>
     /// Configura um webhook de forma assíncrona.
     /// </summary>
-    /// <param name="body">O corpo da configuração do webhook.</param>
+    /// <param name="chave">A chave do webhook.</param>
     /// <param name="cancellationToken">O token de cancelamento da operação.</param>
     /// <returns>Uma tarefa que representa a operação assíncrona.</returns>
-    Task ConfigureWebhookAsync(WebhookPayload body, CancellationToken cancellationToken = default);
+    Task ConfigureWebhookAsync(string chave, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Obtém um webhook de forma assíncrona.

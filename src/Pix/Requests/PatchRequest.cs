@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace PixDotNet.Requests
 {
-    internal class PutRequest<TIn> : RequestBase
+    internal class PatchRequest<TIn> : RequestBase
     {
-        public PutRequest(HttpClient client, string url, TIn body) : base(client, url, body)
+        public PatchRequest(HttpClient client, string url, TIn body) : base(client, url, body)
         {
         }
 
@@ -20,7 +20,7 @@ namespace PixDotNet.Requests
 
         private async Task<HttpResponseMessage> SendMessageAsync(CancellationToken cancellationToken)
         {
-            return await Client.SendAsync(new HttpRequestMessage(HttpMethod.Put, Endpoint)
+            return await Client.SendAsync(new HttpRequestMessage(HttpMethod.Patch, Endpoint)
             {
                 Content = SerializeBody()
             }, cancellationToken);
@@ -42,47 +42,9 @@ namespace PixDotNet.Requests
         }
     }
 
-    internal class PutRequestOuter<TOut> : RequestBase
+    internal class PatchRequest<TIn, TOut> : RequestBase
     {
-        public PutRequestOuter(HttpClient client, string url) : base(client, url)
-        {
-        }
-
-        internal async Task ExecuteAsync(CancellationToken cancellationToken)
-        {
-            using (var response = await SendMessageAsync(cancellationToken))
-            {
-                await HandleResponseAsync(response);
-            }
-        }
-
-        private async Task<HttpResponseMessage> SendMessageAsync(CancellationToken cancellationToken)
-        {
-            return await Client.SendAsync(new HttpRequestMessage(HttpMethod.Put, Endpoint)
-            {
-                Content = SerializeBody()
-            }, cancellationToken);
-        }
-
-        private HttpContent? SerializeBody()
-        {
-            if (Body is null)
-            {
-                return null;
-            }
-
-            if (Body is byte[] bodyBytes)
-            {
-                return new ByteArrayContent(bodyBytes);
-            }
-
-            return new ByteArrayContent(Serialize(Body));
-        }
-    }
-
-    internal class PutRequest<TIn, TOut> : RequestBase
-    {
-        public PutRequest(HttpClient client, string url, TIn body) : base(client, url, body)
+        public PatchRequest(HttpClient client, string url, TIn body) : base(client, url, body)
         {
         }
 
@@ -96,7 +58,7 @@ namespace PixDotNet.Requests
 
         private async Task<HttpResponseMessage> SendMessageAsync(CancellationToken cancellationToken)
         {
-            return await Client.SendAsync(new HttpRequestMessage(HttpMethod.Put, Endpoint)
+            return await Client.SendAsync(new HttpRequestMessage(HttpMethod.Patch, Endpoint)
             {
                 Content = SerializeBody()
             }, cancellationToken);

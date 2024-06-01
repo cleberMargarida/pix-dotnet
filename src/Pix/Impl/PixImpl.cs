@@ -5,37 +5,34 @@ using System.Threading.Tasks;
 
 namespace PixDotNet.Impl
 {
-    internal class PixImpl : IPix
+    internal class PixImpl : PixBase, IPix
     {
-        private readonly HttpClient _httpClient;
-
-        public PixImpl(HttpClient httpClient)
+        public PixImpl(HttpClient httpClient) : base(httpClient)
         {
-            _httpClient = httpClient;
         }
 
         /// <inheritdoc/>
         public Task<Pix> GetPixAsync(string e2eid, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            return Get<Pix>("/pix/{0}", e2eid).ExecuteAsync(cancellationToken);
         }
 
         /// <inheritdoc/>
         public Task<Devolucao> GetReturnedPixAsync(string e2eid, string id, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            return Get<Devolucao>("/pix/{0}/devolucao/{1}", e2eid, id).ExecuteAsync(cancellationToken);
         }
 
         /// <inheritdoc/>
         public Task<PixConsultados> ListPixReceivedAsync(ParametrosConsultaPix @params, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            return Get<PixConsultados>("/pix?{0}", @params.ToQueryString()).ExecuteAsync(cancellationToken);
         }
 
         /// <inheritdoc/>
         public Task<Devolucao> ReturnPixAsync(string e2eid, string id, decimal valor, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            return Put<ValorPayload, Devolucao>("/pix/{0}/devolucao/{1}", new ValorPayload(valor), e2eid, id).ExecuteAsync(cancellationToken);
         }
     }
 }

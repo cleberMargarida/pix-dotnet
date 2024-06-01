@@ -22,25 +22,31 @@ namespace PixDotNet.Impl
         /// <inheritdoc/>
         public Task<CobGerada> CreateCobAsync(CobBody body, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            return Post<CobBody, CobGerada>("/cob", body).ExecuteAsync(cancellationToken);
         }
 
         /// <inheritdoc/>
-        public Task<CobSolicitada> GetCobAsync(string txid, int? revisao = null, CancellationToken cancellationToken = default)
+        public Task<CobSolicitada> GetCobAsync(string txid, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            return Get<CobSolicitada>("/cob/{0}", txid).ExecuteAsync(cancellationToken);
+        }
+
+        /// <inheritdoc/>
+        public Task<CobSolicitada> GetCobAsync(string txid, int revisao, CancellationToken cancellationToken = default)
+        {
+            return Get<CobSolicitada>("/cob/{0}?revisao={1}", txid).ExecuteAsync(cancellationToken);
         }
 
         /// <inheritdoc/>
         public Task<CobsConsultadas> ListCobAsync(ParametrosConsultaCob payload, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            return Get<CobsConsultadas>("/cob?{0}", payload.ToQueryString()).ExecuteAsync(cancellationToken);
         }
 
         /// <inheritdoc/>
         public Task<CobRevisada> ReviewCobAsync(string txid, CobBody body, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            return Patch<CobBody, CobRevisada>("/cob/{0}", body, txid).ExecuteAsync(cancellationToken);
         }
     }
 }

@@ -5,37 +5,34 @@ using System.Threading.Tasks;
 
 namespace PixDotNet.Impl
 {
-    internal class PayloadLocationImpl : IPayloadLocation
+    internal class PayloadLocationImpl : PixBase, IPayloadLocation
     {
-        private readonly HttpClient _httpClient;
-
-        public PayloadLocationImpl(HttpClient httpClient)
+        public PayloadLocationImpl(HttpClient httpClient) : base(httpClient)
         {
-            _httpClient = httpClient;
         }
 
         /// <inheritdoc/>
         public Task<PayloadLocation> CreatePayloadLocationAsync(TipoCob tipoCob, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            return Post<TipoCobPayload, PayloadLocation>("/loc", new TipoCobPayload(tipoCob)).ExecuteAsync(cancellationToken);
         }
 
         /// <inheritdoc/>
-        public Task<PayloadLocation> DeletePayloadLocationAsync(long id, CancellationToken cancellationToken = default)
+        public Task DeletePayloadLocationAsync(string txId, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            return Delete("/loc/{0}/txid", txId).ExecuteAsync(cancellationToken);
         }
 
         /// <inheritdoc/>
-        public Task<PayloadLocation> GetPayloadLocationAsync(long id, CancellationToken cancellationToken = default)
+        public Task<PayloadLocation> GetPayloadLocationAsync(string txId, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            return Get<PayloadLocation>("/loc/{0}", txId).ExecuteAsync(cancellationToken);
         }
 
         /// <inheritdoc/>
         public Task<PayloadLocationConsultadas> ListPayloadLocationAsync(ParametrosConsultaPayloadLocation @params, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            return Get<PayloadLocationConsultadas>("/loc?{0}", @params.ToQueryString()).ExecuteAsync(cancellationToken);
         }
     }
 }

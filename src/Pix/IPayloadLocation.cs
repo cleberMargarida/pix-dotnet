@@ -22,7 +22,7 @@ public interface IPayloadLocation
     /// <param name="id">O identificador da localização de payload.</param>
     /// <param name="cancellationToken">O token de cancelamento da operação.</param>
     /// <returns>Uma tarefa que representa a operação assíncrona. O resultado é a localização de payload obtida.</returns>
-    Task<PayloadLocation> GetPayloadLocationAsync(long id, CancellationToken cancellationToken = default);
+    Task<PayloadLocation> GetPayloadLocationAsync(string txId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Lista localizações de payload de forma assíncrona.
@@ -38,5 +38,5 @@ public interface IPayloadLocation
     /// <param name="id">O identificador da localização de payload.</param>
     /// <param name="cancellationToken">O token de cancelamento da operação.</param>
     /// <returns>Uma tarefa que representa a operação assíncrona. O resultado é a localização de payload deletada.</returns>
-    Task<PayloadLocation> DeletePayloadLocationAsync(long id, CancellationToken cancellationToken = default);
+    Task DeletePayloadLocationAsync(string txId, CancellationToken cancellationToken = default);
 }

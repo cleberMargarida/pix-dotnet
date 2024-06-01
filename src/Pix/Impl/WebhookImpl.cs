@@ -5,37 +5,30 @@ using System.Threading.Tasks;
 
 namespace PixDotNet.Impl
 {
-    internal class WebhookImpl : IWebhook
+    internal class WebhookImpl : PixBase, IWebhook
     {
-        private readonly HttpClient _httpClient;
-
-        public WebhookImpl(HttpClient httpClient)
+        public WebhookImpl(HttpClient httpClient) : base(httpClient)
         {
-            _httpClient = httpClient;
         }
 
-        /// <inheritdoc/>
         public Task CancelWebhookAsync(string chave, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            return Delete("/webhook/{0}", chave).ExecuteAsync(cancellationToken);
         }
 
-        /// <inheritdoc/>
-        public Task ConfigureWebhookAsync(WebhookPayload body, CancellationToken cancellationToken = default)
+        public Task ConfigureWebhookAsync(string chave, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            return Put<WebhookPayload>("/webhook/{0}", chave).ExecuteAsync(cancellationToken);
         }
 
-        /// <inheritdoc/>
         public Task<Webhook> GetWebhookAsync(string chave, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            return Get<Webhook>("/webhook/{0}", chave).ExecuteAsync(cancellationToken);
         }
 
-        /// <inheritdoc/>
         public Task<WebhooksConsultados> ListWebhooksAsync(ParametrosConsultaWebhooks @params, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            return Get<WebhooksConsultados>("/webhook?", @params.ToQueryString()).ExecuteAsync(cancellationToken);
         }
     }
 }

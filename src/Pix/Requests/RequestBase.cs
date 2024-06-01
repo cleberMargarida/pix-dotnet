@@ -61,5 +61,25 @@ namespace PixDotNet.Requests
                 throw new PixRequestException(string.Format("Unexpected response, status code {0}: {1}", response.StatusCode, await sr.ReadToEndAsync()), response.StatusCode);
             }
         }
+
+        protected async Task HandleResponseAsync(HttpResponseMessage response)
+        {
+            using var responseStream = await response.Content.ReadAsStreamAsync();
+
+            if (responseStream == null)
+            {
+                throw new PixRequestException(string.Format("Unexpected response, status code {0}", response.StatusCode), response.StatusCode);
+            }
+
+            if (response.IsSuccessStatusCode)
+            {
+                return;
+            }
+
+            using (var sr = new StreamReader(responseStream))
+            {
+                throw new PixRequestException(string.Format("Unexpected response, status code {0}: {1}", response.StatusCode, await sr.ReadToEndAsync()), response.StatusCode);
+            }
+        }
     }
 }

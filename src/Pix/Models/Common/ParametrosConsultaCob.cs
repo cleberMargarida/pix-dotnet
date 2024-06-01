@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Web;
 
 namespace PixDotNet.Models.Common
 {
@@ -38,11 +40,67 @@ namespace PixDotNet.Models.Common
         /// <summary>
         /// Filtro pelo status das cobranças.
         /// </summary>
-        public string Status { get; set; }
+        public string? Status { get; set; }
 
         /// <summary>
         /// Parâmetros de paginação.
         /// </summary>
-        public Paginacao Paginacao { get; set; }
+        public Paginacao? Paginacao { get; set; }
+
+        internal string ToQueryString()
+        {
+            return string.Join("&", QueryParamters);
+        }
+
+        private IEnumerable<string> QueryParamters
+        {
+            get
+            {
+                if (Inicio != default)
+                {
+                    yield return $"inicio={Inicio:MM-dd-yyyy}";
+                }
+
+                if (Fim != default)
+                {
+                    yield return $"fim={Fim:MM-dd-yyyy}";
+                }
+
+                if (!string.IsNullOrEmpty(Cpf))
+                {
+                    yield return $"cpf={HttpUtility.UrlEncode(Cpf)}";
+                }
+
+                if (!string.IsNullOrEmpty(Cnpj))
+                {
+                    yield return $"cnpj={HttpUtility.UrlEncode(Cnpj)}";
+                }
+
+                if (LocationPresente.HasValue)
+                {
+                    yield return $"locationPresente={LocationPresente.Value.ToString().ToLower()}";
+                }
+
+                if (!string.IsNullOrEmpty(Status))
+                {
+                    yield return $"status={HttpUtility.UrlEncode(Status)}";
+                }
+
+                if (Paginacao == null)
+                {
+                    yield break;
+                }
+
+                if (Paginacao.PaginaAtual > 0)
+                {
+                    yield return $"paginacao.paginaAtual={Paginacao.PaginaAtual}";
+                }
+
+                if (Paginacao.ItensPorPagina > 0)
+                {
+                    yield return $"paginacao.itensPorPagina={Paginacao.ItensPorPagina}";
+                }
+            }
+        }
     }
 }

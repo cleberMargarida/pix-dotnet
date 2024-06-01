@@ -27,9 +27,39 @@ namespace PixDotNet.Impl
             return new GetRequest<TOut>(_httpClient, url);
         }
 
+        protected PutRequest<TIn> Put<TIn>(string url, TIn body, params string[] parameters)
+        {
+            return new PutRequest<TIn>(_httpClient, string.Format(url, parameters), body);
+        }
+        
         protected PutRequest<TIn, TOut> Put<TIn, TOut>(string url, TIn body, params string[] parameters)
         {
             return new PutRequest<TIn, TOut>(_httpClient, string.Format(url, parameters), body);
+        }
+        
+        protected PutRequestOuter<TOut> Put<TOut>(string url, params string[] parameters)
+        {
+            return new PutRequestOuter<TOut>(_httpClient, string.Format(url, parameters));
+        }
+
+        protected PostRequest<TIn, TOut> Post<TIn, TOut>(string url, TIn body, params string[] parameters)
+        {
+            return new PostRequest<TIn, TOut>(_httpClient, string.Format(url, parameters), body);
+        }
+
+        protected PatchRequest<TIn> Patch<TIn>(string url, TIn body, params string[] parameters)
+        {
+            return new PatchRequest<TIn>(_httpClient, string.Format(url, parameters), body);
+        }
+
+        protected PatchRequest<TIn, TOut> Patch<TIn, TOut>(string url, TIn body, params string[] parameters)
+        {
+            return new PatchRequest<TIn, TOut>(_httpClient, string.Format(url, parameters), body);
+        }
+
+        protected DeleteRequest Delete(string url, params string[] parameters)
+        {
+            return new DeleteRequest(_httpClient, string.Format(url, parameters));
         }
     }
 }

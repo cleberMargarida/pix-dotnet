@@ -30,10 +30,18 @@ public interface ICob
     /// Obtém uma cobrança com o ID de transação especificado de forma assíncrona.
     /// </summary>
     /// <param name="txid">O ID de transação da cobrança.</param>
+    /// <param name="cancellationToken">O token de cancelamento opcional.</param>
+    /// <returns>Uma tarefa que representa a operação assíncrona. O resultado é a cobrança solicitada.</returns>
+    Task<CobSolicitada> GetCobAsync(string txid, CancellationToken cancellationToken = default);
+    
+    /// <summary>
+    /// Obtém uma cobrança com o ID de transação especificado de forma assíncrona.
+    /// </summary>
+    /// <param name="txid">O ID de transação da cobrança.</param>
     /// <param name="revisao">A revisão da cobrança a ser obtida (opcional).</param>
     /// <param name="cancellationToken">O token de cancelamento opcional.</param>
     /// <returns>Uma tarefa que representa a operação assíncrona. O resultado é a cobrança solicitada.</returns>
-    Task<CobSolicitada> GetCobAsync(string txid, int? revisao = null, CancellationToken cancellationToken = default);
+    Task<CobSolicitada> GetCobAsync(string txid, int revisao, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Cria uma nova cobrança com o corpo especificado de forma assíncrona.

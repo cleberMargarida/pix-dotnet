@@ -5,37 +5,34 @@ using System.Threading.Tasks;
 
 namespace PixDotNet.Impl
 {
-    internal class LoteCobVImpl : ILoteCobV
+    internal class LoteCobVImpl : PixBase, ILoteCobV
     {
-        private readonly HttpClient _httpClient;
-
-        public LoteCobVImpl(HttpClient httpClient)
+        public LoteCobVImpl(HttpClient httpClient) : base(httpClient)
         {
-            _httpClient = httpClient;
         }
 
         /// <inheritdoc/>
         public Task CriarOuAlterarCobVAsync(long id, LoteCobVBody body, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            return Put<LoteCobVBody>("/lotecobv/{0}", body, id.ToString()).ExecuteAsync(cancellationToken);
         }
 
         /// <inheritdoc/>
         public Task<LoteCobVConsultado> GetCobVAsync(long id, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            return Get<LoteCobVConsultado>("/lotecobv/{0}", id.ToString()).ExecuteAsync(cancellationToken);
         }
 
         /// <inheritdoc/>
-        public Task<LotesCobVConsultados> ListCobVAsync(ParametrosConsultaLote body, CancellationToken cancellationToken = default)
+        public Task<LotesCobVConsultados> ListCobVAsync(ParametrosConsultaLote @params, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            return Get<LotesCobVConsultados>("/lotecobv?{0}", @params.ToQueryString()).ExecuteAsync(cancellationToken);
         }
 
         /// <inheritdoc/>
         public Task ReviewCobVAsync(long id, LoteCobVBody body, CancellationToken cancellationToken = default)
         {
-            throw new System.NotImplementedException();
+            return Patch<LoteCobVBody>("/lotecobv/{0}", body, id.ToString()).ExecuteAsync(cancellationToken);
         }
     }
 }
